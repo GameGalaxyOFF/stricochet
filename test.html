@@ -8,79 +8,108 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
         body {
-            background-color: #1a1a1a;
-            text-align: center;
-            font-family: Arial, sans-serif;
+            background-color: #000;
             margin: 0;
             padding: 0;
+            overflow: hidden;
         }
         .video-container {
+            position: relative;
             width: 100vw;
             height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: #2a2a2a;
+            background: #000;
         }
         video {
             width: 100%;
-            height: auto;
-            background: black;
+            height: 100%;
+            object-fit: cover;
         }
         .controls {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
+            position: absolute;
             width: 100%;
-            padding: 10px;
-            background: #3a3a3a;
-            border-radius: 5px;
-        }
-        button {
-            background: #780000;
-            border: none;
-            padding: 10px 15px;
-            color: white;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
+            height: 100%;
             display: flex;
+            justify-content: center;
             align-items: center;
-            margin-right: 10px;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
         }
-        button:hover {
-            background: #500000;
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
         }
-        button i {
-            margin-right: 5px;
+        .control-btn {
+            background: rgba(0, 0, 0, 0.6);
+            border: none;
+            padding: 15px;
+            color: white;
+            font-size: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .control-btn:hover {
+            background: rgba(255, 0, 0, 0.8);
+        }
+        .cast-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div class="video-container">
+    <div class="video-container" onclick="toggleControls()">
         <video id="video">
             <source src="http://cinesaga.xyz/movies/La-Liste-De-Schindler.mp4" type="video/mp4">
             Votre navigateur ne supporte pas la vidéo.
         </video>
-        <div class="controls">
-            <button onclick="playPause()"><i class="fas fa-play"></i>Play/Pause</button>
-            <button onclick="stopVideo()"><i class="fas fa-stop"></i>Stop</button>
-            <button id="castButton" onclick="startCasting()"><i class="fas fa-tv"></i>Cast</button>
+        <button class="cast-btn" onclick="startCasting()"><i class="fas fa-tv"></i></button>
+        <div class="controls" id="controls">
+            <button class="control-btn" onclick="rewind()"><i class="fas fa-backward"></i></button>
+            <button class="control-btn" onclick="playPause()"><i class="fas fa-play" id="play-icon"></i></button>
+            <button class="control-btn" onclick="forward()"><i class="fas fa-forward"></i></button>
         </div>
     </div>
 
     <script>
         let video = document.getElementById("video");
+        let controls = document.getElementById("controls");
+        let playIcon = document.getElementById("play-icon");
+        let timeout;
 
         function playPause() {
-            if (video.paused) video.play();
-            else video.pause();
+            if (video.paused) {
+                video.play();
+                playIcon.classList.replace("fa-play", "fa-pause");
+            } else {
+                video.pause();
+                playIcon.classList.replace("fa-pause", "fa-play");
+            }
         }
 
-        function stopVideo() {
-            video.pause();
-            video.currentTime = 0;
+        function forward() {
+            video.currentTime += 10;
+        }
+
+        function rewind() {
+            video.currentTime -= 10;
+        }
+
+        function toggleControls() {
+            controls.classList.remove("hidden");
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                controls.classList.add("hidden");
+            }, 5000);
         }
 
         function startCasting() {
