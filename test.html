@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecteur Vidéo Personnalisé</title>
+    <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .video-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #2a2a2a;
+        }
+        video {
+            width: 100%;
+            height: auto;
+        }
+        .controls {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            padding: 10px;
+            background: #3a3a3a;
+            border-radius: 5px;
+        }
+        button {
+            background: #555;
+            border: none;
+            padding: 10px 15px;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #777;
+        }
+        button i {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <video id="video" controls>
+            <source src="http://cinesaga.xyz/movies/La-Liste-De-Schindler.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+        </video>
+        <div class="controls">
+            <button onclick="playPause()"><i class="fas fa-play"></i>Play/Pause</button>
+            <button onclick="stopVideo()"><i class="fas fa-stop"></i>Stop</button>
+            <button id="castButton" onclick="startCasting()"><i class="fas fa-tv"></i>Cast</button>
+        </div>
+    </div>
+
+    <script>
+        let video = document.getElementById("video");
+
+        function playPause() {
+            if (video.paused) video.play();
+            else video.pause();
+        }
+
+        function stopVideo() {
+            video.pause();
+            video.currentTime = 0;
+        }
+
+        function startCasting() {
+            if (!chrome.cast || !chrome.cast.isAvailable) {
+                alert("Chromecast non disponible");
+                return;
+            }
+            let sessionRequest = new chrome.cast.SessionRequest(chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID);
+            let apiConfig = new chrome.cast.ApiConfig(sessionRequest, session => {}, error => console.log(error));
+            
+            chrome.cast.initialize(apiConfig, () => {
+                chrome.cast.requestSession(session => {
+                    let mediaInfo = new chrome.cast.media.MediaInfo(video.src, 'video/mp4');
+                    let request = new chrome.cast.media.LoadRequest(mediaInfo);
+                    session.loadMedia(request);
+                }, error => console.log(error));
+            }, error => console.log(error));
+        }
+    </script>
+</body>
+</html>
