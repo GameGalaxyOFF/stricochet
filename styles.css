@@ -1,0 +1,73 @@
+/* Styles généraux */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #000, #1a1a1a);
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* En-tête */
+header {
+    background: #141414;
+    padding: 15px;
+    text-align: left;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: red;
+    margin-left: 20px;
+}
+
+/* Section principale */
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    text-align: center;
+    padding: 20px;
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.hero h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    animation: fadeIn 2s ease-in-out;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #b3b3b3;
+    animation: fadeIn 2.5s ease-in-out;
+}
+
+/* Bouton stylisé */
+.btn {
+    display: inline-block;
+    background: red;
+    color: white;
+    padding: 12px 24px;
+    font-size: 18px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: darkred;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

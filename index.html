@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Mon Site de Films</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: white;
+        }
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: url('https://source.unsplash.com/1600x900/?movie,cinema') no-repeat center;
+            background-size: cover;
+        }
+        .hero h1 {
+            font-size: 48px;
+            background: rgba(0, 0, 0, 0.6);
+            display: inline-block;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .latest-movies {
+            text-align: center;
+            padding: 50px 20px;
+            background: #222;
+        }
+        .latest-movies h2 {
+            margin-bottom: 20px;
+        }
+        .movies {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .movie {
+            margin: 10px;
+            background: #333;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .movie img {
+            width: 150px;
+            border-radius: 5px;
+        }
+        .search-container {
+            text-align: center;
+            padding: 30px;
+        }
+        .search-container input {
+            padding: 10px;
+            width: 60%;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Bienvenue sur notre site de films !</h1>
+    </div>
+    
+    <div class="latest-movies">
+        <h2>🎬 Voici les derniers ajouts</h2>
+        <div class="movies">
+            <div class="movie">
+                <img src="https://fr.web.img4.acsta.net/r_1920_1080/img/39/4a/394a0222094c3df3c2fc35768bcfbb36.jpg" alt="Sonic 3">
+                <p>Sonic 3</p>
+                <a href="film-sonic.html">▶ Regarder</a>
+            </div>
+            <div class="movie">
+                <img src="https://via.placeholder.com/150" alt="Autre Film">
+                <p>Autre Film</p>
+                <a href="#">▶ Regarder</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="search-container">
+        <h2>🔎 Rechercher un film</h2>
+        <input type="text" placeholder="Rechercher un film...">
+    </div>
+</body>
+</html>
